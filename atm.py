@@ -8,7 +8,8 @@ def show_menu():
     print("1. Depositar")
     print("2. Sacar")
     print("3. Revelar Saldo")
-    print("4. Encerrar")
+    print("4. Nova Senha")
+    print("5. Encerrar")
 
 
 ## Efetua o deposito, op 1
@@ -40,17 +41,44 @@ def saque(titularCartao):
 def revelaSaldo(titularCartao):
     print("Seu saldo e de: " , str(titularCartao.get_saldo()))
 
+## Muda a senha, op 4
+def novaSenha(titularCartao):
+    try:
+        novaSenha = int(input("Digite a nova senha: ").strip())
+
+        if(user_atual.get_pin() != novaSenha):
+            confirmaSenha = int(input("Confirme a senha: ").strip())
+        
+            if(novaSenha == confirmaSenha):
+                titularCartao.set_pin(titularCartao.get_pin(novaSenha))
+            else:
+                for i in range(3):
+                    confirmaSenha = int(input("As Senhas nao batem, tente novamente: ").strip())
+        
+                    if(novaSenha == confirmaSenha):
+                        titularCartao.set_pin(titularCartao.get_pin(novaSenha))
+                        break
+
+        else:
+            print("O novo PIN / Senha deve ser diferente da atual")    
+
+            
+
+    except:
+        print("Tentativa invalida")
+
+        
 ## Inicializa o usuario no console
 if __name__ == "__main__":
-    user_atual = titularCartao("" , "" , "" , "" , "")
+    user_atual = titularCartao("" , "" , "" , "" , "" , "")
 
     ## DB dos titulares
     list_titulares = []
-    list_titulares.append(titularCartao("123321" , 1234 , "Maria" , "Aparecida" , 200.00))
-    list_titulares.append(titularCartao("134431" , 4321 , "Celio" , "Costa" , 2000.21))
-    list_titulares.append(titularCartao("101202" , 1357 , "Neymar" , "Junior" , 18.00))
-    list_titulares.append(titularCartao("303404" , 1013 , "Rafael" , "Garcia" , 20000.51))
-    list_titulares.append(titularCartao("404505" , 2468 , "Leticia" , "Nominato" , 165.30))
+    list_titulares.append(titularCartao("123321" , 1234 , "Maria" , "Aparecida" , 200.00 , 0))
+    list_titulares.append(titularCartao("134431" , 4321 , "Celio" , "Costa" , 2000.21 , 0))
+    list_titulares.append(titularCartao("101202" , 1357 , "Neymar" , "Junior" , 18.00 , 0))
+    list_titulares.append(titularCartao("303404" , 1013 , "Rafael" , "Garcia" , 165.51 , 0))
+    list_titulares.append(titularCartao("404505" , 2468 , "Leticia" , "Nominato" , 58290.30 , 0))
 
     ## Inicia o usuario com o numero do cartao de debito
     debito_numCartao = ""
@@ -107,6 +135,9 @@ if __name__ == "__main__":
             revelaSaldo(user_atual)
         
         elif(opcao == 4):
+            novaSenha(user_atual)
+
+        elif(opcao == 5):
             break
         
         else:
