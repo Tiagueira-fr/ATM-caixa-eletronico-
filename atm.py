@@ -8,7 +8,7 @@ def show_menu():
     print("1. Depositar")
     print("2. Sacar")
     print("3. Revelar Saldo")
-    print("4. Encerrar")
+    print("4. Finalizar")
 
 
 ## Efetua o deposito, op 1
