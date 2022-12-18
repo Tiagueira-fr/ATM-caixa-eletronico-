@@ -1,0 +1,18 @@
+show_menu:
+Teste para verificar se a função imprime as opções de menu corretamente.
+
+deposito:
+Teste para verificar se a função permite que o usuário faça um depósito válido e atualiza o saldo da conta corretamente.
+Teste para verificar se a função exibe uma mensagem de erro quando o usuário tenta fazer um depósito com um valor inválido.
+
+saque:
+Teste para verificar se a função permite que o usuário faça um saque válido e atualiza o saldo da conta corretamente.
+Teste para verificar se a função exibe uma mensagem de erro quando o usuário tenta fazer um saque com um valor inválido.
+Teste para verificar se a função exibe uma mensagem de erro quando o usuário tenta fazer um saque com um valor maior que o saldo da conta.
+
+revelaSaldo:
+Teste para verificar se a função exibe o saldo da conta corretamente.
+
+novaSenha:
+Teste para verificar se a função permite que o usuário altere a senha para uma senha válida de 4 dígitos.
+Teste para verificar se a função exibe uma mensagem de erro quando o usuário tenta alterar a senha para uma senha inválida.
