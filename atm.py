@@ -12,6 +12,7 @@ def show_menu():
     print("5. Encerrar")
 
 
+
 ## Efetua o deposito, op 1
 def deposito(titularCartao):
     try:
