@@ -1,5 +1,4 @@
-## Aqui configuramos o console do Caixa Eletronico
-
+# Aqui configuramos o console do Caixa Eletronico
 from titularCartao import titularCartao
 
 ## Menu Inicial
@@ -12,8 +11,8 @@ def show_menu():
     print("5. Encerrar")
 
 
-
 ## Efetua o deposito, op 1
+
 def deposito(titularCartao):
     try:
         deposito = float(input("Insira o valor a ser depositado: "))
@@ -23,6 +22,13 @@ def deposito(titularCartao):
 
     except:
         print("Valor Invalido")
+   
+    """
+    Esta função permite que o usuário efetue um depósito na sua conta.
+    Ela recebe como parâmetro o objeto titularCartao, que é a conta do usuário, 
+    e solicita o valor do depósito. Se o valor for válido, o saldo da conta é atualizado e 
+    exibido para o usuário. Caso contrário, uma mensagem de erro é exibida.
+    """
 
 
 ## Efetua o saque, op 2
@@ -36,39 +42,76 @@ def saque(titularCartao):
             print("Saque efetuado, seu novo saldo e de: " , str(titularCartao.get_saldo()))
     except:
         print("Valor Invalido")
+    
+    """
+    Esta função permite que o usuário efetue um saque da sua conta.
+    Ela recebe como parâmetro o objeto titularCartao, que é a conta do usuário, 
+    e solicita o valor do saque. Se o valor for válido e o saldo da conta for suficiente, 
+    o saldo é atualizado e exibido para o usuário. Caso contrário, uma mensagem de erro é exibida.
+    """
 
 
 ## Revela Saldo, op 3
 def revelaSaldo(titularCartao):
     print("Seu saldo e de: " , str(titularCartao.get_saldo()))
+"""
+    Esta função exibe o saldo atual da conta do usuário.
+    Ela recebe como parâmetro o objeto titularCartao, que é a conta do usuário, 
+    e exibe o saldo para o usuario
+"""
 
 ## Muda a senha, op 4
 def novaSenha(titularCartao):
-    try:
-        novaSenha = int(input("Digite a nova senha: ").strip())
+    
+    novaSenha = int(input("\nA sua nova senha deve ter 4 digitos.\nDigite a nova senha: ").strip())
 
-        if(user_atual.get_pin() != novaSenha):
-            confirmaSenha = int(input("Confirme a senha: ").strip())
-        
-            if(novaSenha == confirmaSenha):
-                titularCartao.set_pin(titularCartao.get_pin(novaSenha))
-            else:
-                for i in range(3):
-                    confirmaSenha = int(input("As Senhas nao batem, tente novamente: ").strip())
-        
-                    if(novaSenha == confirmaSenha):
-                        titularCartao.set_pin(titularCartao.get_pin(novaSenha))
-                        break
+    # Conta quantos dígitos a nova senha tem
+    contador = 0
+    while novaSenha > 0:
+        novaSenha = novaSenha // 10
+        contador += 1
 
+    # Verifica se a nova senha é válida
+    if user_atual.get_pin() != novaSenha and contador <= 4 :
+        confirmaSenha = int(input("Confirme a senha: ").strip())
+        
+        # Verifica se a nova senha é igual à senha atual
+        if (novaSenha == user_atual.get_pin()):
+            print("O novo PIN / Senha deve ser diferente da atual")
+        
+        # Verifica se a nova senha foi confirmada corretamente
+        if (novaSenha == confirmaSenha):     
+             titularCartao.set_pin (novaSenha)
+        elif (novaSenha == user_atual.get_pin()):
+             print("O novo PIN / Senha deve ser diferente da atual")
         else:
-            print("O novo PIN / Senha deve ser diferente da atual")    
-
-            
-
-    except:
-        print("Tentativa invalida")
-
+            # Enquanto as senhas não forem iguais, solicita novas senhas para o usuário
+            while (True):
+                confirmaSenha = int(input("As Senhas não batem, tente novamente: ").strip())
+                if novaSenha == confirmaSenha:
+                    titularCartao.set_pin(novaSenha)
+                    break
+                
+    else:
+        print("O novo PIN / Senha deve ser diferente da atual, e tambem deve ter no maximo 4 digitos\n")
         
+    
+    """
+    Esta função permite que o usuário altere a senha de sua conta.
+    Ela recebe como parâmetro o objeto titularCartao, que é a conta do usuário, 
+    e solicita a nova senha. A nova senha deve ter no máximo 4 dígitos e ser diferente da senha atual.
+    Se a nova senha for válida, ela é confirmada pelo usuário e, se as duas senhas digitadas forem iguais,
+    a senha da conta é atualizada. Caso contrário, uma mensagem de erro é exibida.
+    """
+
+## Revela Informação, op 99 oculta apenas para caso de teste
+def infoUser(titularCartao):
+    print(titularCartao.print_out())
+    """
+    Esta funçao é utilizada para revelar todas as informacoes do usuario, esta oculta no menu principal.
+    Ela recebe como parametro o objeto titularCartao, que é a conta do usuario.
+    """
+
 ## Inicializa o usuario no console
 if __name__ == "__main__":
     user_atual = titularCartao("" , "" , "" , "" , "" , "")
@@ -112,8 +155,28 @@ if __name__ == "__main__":
             print("Senha / Pin invalida! Por favor tente de novo")
 
     ## Inicia o menu
-
-    print("Bem vindo " , user_atual.get_nome(), " :)")
+    
+    # Verifica o sistema operacional do usuario
+    import os
+    import platform
+    try: 
+        system = platform.system()
+        print(system)
+            # Limpa a tela em sistemas Unix
+        if system == "Linux":    
+            os.system("clear")
+        
+        elif system == "Windows":
+            # Limpa a tela em sistemas Windows
+            os.system("cls")
+        
+        elif system == "Darwin":
+            os.system("clear")
+    # Trata erro caso o sistema operacional não seja reconhecido
+    except:
+        None
+        
+    print("\nBem vindo(a)" , user_atual.get_nome(), " :)")
 
     opcao = 0
 
@@ -123,7 +186,7 @@ if __name__ == "__main__":
             opcao = int(input())
 
         except:
-            print("Opcao invalida. Tente novamente")
+            print("\nOpcao invalida. Tente novamente")
 
         
         if (opcao == 1):
@@ -140,9 +203,12 @@ if __name__ == "__main__":
 
         elif(opcao == 5):
             break
+
+        elif(opcao == 99):
+            infoUser(user_atual)
         
         else:
             opcao = 0 
-            print("Obrigado por me testar")
+            print("\nObrigado por me testar")
         
         
